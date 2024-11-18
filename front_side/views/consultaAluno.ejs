@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta nome="viewport" content="width=device-width, initial-scale=1,0">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styleLista.css">
+    <title>Aluno</title>
+</head>
+
+<body>
+    <nav class="navbar bg-light">
+        <div class="container-fluid">
+            <div>            
+                <a href="" class="navbar-brand">Classroom</a>
+            </div>
+            <form action="/sair" method="post" class="d-flex" role="search">
+                <button type="submit" class="btn btn-outline-danger">Sair</button>
+            </form>
+        </div>
+    </nav>
+    <div class="geral-lista">
+        <h1 class="title">Consulta de Frequência Aluno</h1>
+        <form action="/consultaA" method="post">
+            <div class="home">
+                <div class="form2">
+                    <label for="exampleFormControlInput1" class="form-label">Discipina</label>
+                    <select class="form-select" aria-label="Default select example" name="disciplina">
+                        <option value="" selected disabled>Escolha uma Discipina</option>
+                        <% if(typeof varDisciplina !=='undefined'){ %>
+                            <% varDisciplina.forEach(function(varDisciplina){ %>  
+                            <option value="<%= varDisciplina.nome_disciplina %>"><%= varDisciplina.nome_disciplina %></option>
+                            <% }); %>
+                        <% }; %>      
+                    </select>
+                </div>
+                <div class="button-enviar">
+                    <button class="btn-enviar btn btn-outline-secondary" type="submit">Consultar</button>
+                </div>
+            </div>
+        </form>
+        <div class="table-dados">
+            <table class="table table-bordered" >
+                <tr>
+                    <th>DATA</th>
+                    <th>RA</th>
+                    <th>TURMA</th>
+                    <th>DISCIPLINA</th>
+                    <th>PRESENÇA</th>
+                </tr>
+                <tr>
+                    <% if(typeof resultado !== 'undefined'){ %> 
+                    <% resultado.forEach(function(resultado){ %> 
+                        <td><%= resultado.data.toLocaleDateString("pt-BR") %> </td>
+                        <td><%= resultado.RA %> </td>
+                        <td><%= resultado.turma %> </td>
+                        <td><%= resultado.nome_disciplina %> </td>
+                        <% if(resultado.presenca == 1){ %> 
+                        <td>Presente </td>
+                        <% }else{%>
+                            <td>Faltou </td>
+                        <%}; %>   
+                </tr>
+                <% }); %>
+                <% }; %>
+            </table>
+        </div>
+    </div>
